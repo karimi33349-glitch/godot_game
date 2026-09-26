@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://epdao4mtwvu2"]
+
+[ext_resource type="Script" uid="uid://jgioa02aexfu" path="res://Scripts/PageLevels/ShowLevels.gd" id="1_hywmh"]
+[ext_resource type="Texture2D" uid="uid://huim518rd7uo" path="res://asset/bg_page_levels.png" id="2_y704x"]
+
+[node name="ShowLevels" type="Control" unique_id=201155491]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+script = ExtResource("1_hywmh")
+
+[node name="Background" type="TextureRect" parent="." unique_id=314026076]
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+texture = ExtResource("2_y704x")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=322171934]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 120.0
+offset_right = 990.0
+offset_bottom = 1420.0
+
+[node name="RootLevels" type="VBoxContainer" parent="CenterContainer" unique_id=1853556401]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://deovon5wd0lh5"]
+
+[ext_resource type="Script" uid="uid://6k18mxqgowxl" path="res://Scripts/Components/LetterButton.gd" id="1_w7jnc"]
+[ext_resource type="FontFile" uid="uid://bv6q41v0ma27f" path="res://fonts/BTitrBd.ttf" id="2_551ls"]
+
+[node name="LetterButton" type="Control" unique_id=1781038355]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_w7jnc")
+font = ExtResource("2_551ls")
+
+[node name="Shadow" type="TextureRect" parent="." unique_id=1382854262]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Visual" type="Control" parent="." unique_id=37359831]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Circle" type="TextureRect" parent="Visual" unique_id=239954692]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Visual" unique_id=961378152]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1963566559]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1115368256]

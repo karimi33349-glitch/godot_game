@@ -1,0 +1,218 @@
+[gd_scene format=3 uid="uid://o2lpsbgrbyrf"]
+
+[ext_resource type="Script" uid="uid://cfg86njks0plp" path="res://Scripts/Game/GameScene.gd" id="1_ono4l"]
+[ext_resource type="Texture2D" uid="uid://cexoj7vr7f5pd" path="res://asset/Background.png" id="2_bp37a"]
+[ext_resource type="Script" uid="uid://c5pmb1gc3y7x1" path="res://Scripts/Managers/LevelManager.gd" id="3_kie8x"]
+[ext_resource type="Script" uid="uid://drbhbw7aecc7n" path="res://Scripts/Managers/WordManager.gd" id="4_em3ys"]
+[ext_resource type="Script" uid="uid://doe7dsruc2epx" path="res://Scripts/UI/UserAnswer.gd" id="5_oy1v1"]
+[ext_resource type="Script" uid="uid://2m1i3d6fbugs" path="res://Scripts/UI/LetterTray.gd" id="6_68h7r"]
+[ext_resource type="FontFile" uid="uid://bv6q41v0ma27f" path="res://fonts/BTitrBd.ttf" id="7_bp37a"]
+[ext_resource type="Script" uid="uid://d1gcipbbp6aot" path="res://Scripts/UI/PopupText.gd" id="7_kdufk"]
+[ext_resource type="Texture2D" uid="uid://f1n125cwvqow" path="res://asset/button.png" id="8_levtd"]
+[ext_resource type="FontFile" uid="uid://35r5sf7nxrb8" path="res://fonts/Lalezar-Regular.ttf" id="9_bkgvn"]
+[ext_resource type="Script" uid="uid://coyxlhddihxri" path="res://Scripts/UI/LevelCompletePopup.gd" id="10_u3f3e"]
+[ext_resource type="Script" uid="uid://c20638s24x1sn" path="res://Scripts/Game/LineDrawer.gd" id="11_d00j0"]
+[ext_resource type="Script" uid="uid://5ypv0052th46" path="res://Scripts/Game/TouchLayer.gd" id="12_gp0h6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_em3ys"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bp37a"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kie8x"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="GameScene" type="Control" unique_id=1623381385]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(1.006714, 1.001649)
+script = ExtResource("1_ono4l")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2095915290]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(1.1322547, 1.1650888)
+texture = ExtResource("2_bp37a")
+
+[node name="LevelManager" type="Node" parent="." unique_id=992187115]
+script = ExtResource("3_kie8x")
+
+[node name="WordManager" type="Node" parent="." unique_id=1520765618]
+script = ExtResource("4_em3ys")
+
+[node name="UI" type="Control" parent="." unique_id=388663938]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UserAnswer" type="Control" parent="UI" unique_id=2003601304]
+anchors_preset = 0
+offset_left = 229.0
+offset_top = 113.0
+offset_right = 829.0
+offset_bottom = 1013.0
+script = ExtResource("5_oy1v1")
+
+[node name="LetterTray" type="Control" parent="UI" unique_id=1307637112]
+anchors_preset = 0
+offset_left = 135.0
+offset_top = 1138.0
+offset_right = 935.0
+offset_bottom = 1788.0
+script = ExtResource("6_68h7r")
+
+[node name="LabelUserTarget" type="Label" parent="UI" unique_id=525242480]
+layout_mode = 0
+offset_left = 514.54535
+offset_top = 1002.34705
+offset_right = 554.54535
+offset_bottom = 1093.347
+theme_override_fonts/font = ExtResource("7_bp37a")
+theme_override_font_sizes/font_size = 70
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PopupText" type="Control" parent="UI" unique_id=1996455213]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(534.412, 1047.2731)
+script = ExtResource("7_kdufk")
+
+[node name="Label" type="Label" parent="UI/PopupText" unique_id=1780969353]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="GuideButton" type="TextureButton" parent="UI" unique_id=2102939113]
+layout_mode = 0
+offset_left = 21.000002
+offset_top = 1709.9999
+offset_right = 533.0
+offset_bottom = 2222.0
+scale = Vector2(0.3545957, 0.36349562)
+texture_normal = ExtResource("8_levtd")
+
+[node name="GuideText" type="Label" parent="UI/GuideButton" unique_id=235299955]
+layout_mode = 0
+offset_left = 53.582153
+offset_top = 104.54077
+offset_right = 443.58215
+offset_bottom = 418.54077
+theme_override_fonts/font = ExtResource("9_bkgvn")
+theme_override_font_sizes/font_size = 200
+text = "راهنما"
+
+[node name="ChangeMapButton" type="TextureButton" parent="UI" unique_id=792110544]
+layout_mode = 0
+offset_left = 882.0
+offset_top = 1719.9999
+offset_right = 1394.0
+offset_bottom = 2232.0
+scale = Vector2(0.33802685, 0.33343098)
+texture_normal = ExtResource("8_levtd")
+
+[node name="ChangeMapText" type="Label" parent="UI/ChangeMapButton" unique_id=680687367]
+layout_mode = 0
+offset_left = 73.95867
+offset_top = 101.970505
+offset_right = 439.95868
+offset_bottom = 415.97052
+theme_override_fonts/font = ExtResource("9_bkgvn")
+theme_override_font_sizes/font_size = 200
+text = "جابجا"
+
+[node name="LevelCopletePopup" type="CanvasLayer" parent="UI" unique_id=789042791]
+layer = 20
+script = ExtResource("10_u3f3e")
+
+[node name="Blocker" type="Control" parent="UI/LevelCopletePopup" unique_id=530849690]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="UI/LevelCopletePopup/Blocker" unique_id=636981673]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 30.0
+offset_right = 20.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_em3ys")
+
+[node name="Title" type="Label" parent="UI/LevelCopletePopup/Blocker/Panel" unique_id=291305791]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -75.5
+offset_right = 20.0
+offset_bottom = 75.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("9_bkgvn")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxFlat_bp37a")
+theme_override_styles/focus = SubResource("StyleBoxFlat_kie8x")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Background" type="TextureRect" parent="UI/LevelCopletePopup/Blocker/Panel" unique_id=960198281]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BottomButtons" type="Control" parent="UI/LevelCopletePopup/Blocker/Panel" unique_id=609856086]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="NextButton" type="Button" parent="UI/LevelCopletePopup/Blocker/Panel/BottomButtons" unique_id=2117631937]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 18.0
+offset_bottom = 40.0
+
+[node name="LevelsButton" type="Button" parent="UI/LevelCopletePopup/Blocker/Panel/BottomButtons" unique_id=1982278529]
+layout_mode = 0
+offset_left = 22.0
+offset_right = 30.0
+offset_bottom = 40.0
+
+[node name="LineDrawer" type="Control" parent="." unique_id=1594695726]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_d00j0")
+
+[node name="TouchLayer" type="Control" parent="." unique_id=1375385584]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_gp0h6")

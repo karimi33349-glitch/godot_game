@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cfp6hvkrw501o"]
+
+[ext_resource type="Texture2D" uid="uid://imfox11i0f4k" path="res://asset/11zon_level_pages.png" id="1_t85j7"]
+[ext_resource type="Script" uid="uid://dswciejlks40k" path="res://Scripts/PageLevels/PageLevels.gd" id="2_s8xm5"]
+
+[node name="PageLevels" type="Control" unique_id=211740894]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+
+[node name="Background" type="TextureRect" parent="." unique_id=1343339182]
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+texture = ExtResource("1_t85j7")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=590401662]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 156.0
+offset_right = 943.0
+offset_bottom = 1656.0
+script = ExtResource("2_s8xm5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=2021442661]
+layout_mode = 2

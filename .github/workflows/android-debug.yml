@@ -1,0 +1,96 @@
+name: Android Debug APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  build-android-debug:
+    name: Build Android debug APK
+    runs-on: ubuntu-latest
+
+    env:
+      GODOT_VERSION: "4.6.2"
+      GODOT_PRESET: "Allemma V1"
+      ANDROID_API_LEVEL: "35"
+      ANDROID_BUILD_TOOLS: "35.0.1"
+      ANDROID_NDK_VERSION: "28.1.13356709"
+      CMAKE_VERSION: "3.10.2.4988404"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4.0.4
+        with:
+          packages: >-
+            platform-tools
+            platforms;android-35
+            build-tools;35.0.1
+            cmdline-tools;latest
+            ndk;28.1.13356709
+            cmake;3.10.2.4988404
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Godot 4.6.2 + export templates
+        uses: chickensoft-games/setup-godot@v2.4.1
+        with:
+          version: 4.6.2
+          use-dotnet: false
+          include-templates: true
+
+      - name: Verify toolchain
+        shell: bash
+        run: |
+          godot --version
+          java -version
+          sdkmanager --version
+          test -f "$ANDROID_SDK_ROOT/build-tools/${ANDROID_BUILD_TOOLS}/apksigner"
+          test -f "$ANDROID_SDK_ROOT/platform-tools/adb"
+
+      - name: Import project
+        shell: bash
+        run: |
+          godot --headless --editor --quit
+
+      - name: Create temporary debug keystore
+        shell: bash
+        run: |
+          keytool -genkeypair \
+            -keystore "$RUNNER_TEMP/ak_debug.keystore" \
+            -storepass android \
+            -keypass android \
+            -alias androiddebugkey \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+
+      - name: Export debug APK
+        shell: bash
+        env:
+          GODOT_ANDROID_KEYSTORE_DEBUG_PATH: ${{ runner.temp }}/ak_debug.keystore
+          GODOT_ANDROID_KEYSTORE_DEBUG_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
+        run: |
+          mkdir -p build/android
+          godot --headless --path . --export-debug "$GODOT_PRESET" build/android/Akhoond-V1-debug.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Akhoond-V1-debug-apk
+          path: build/android/Akhoond-V1-debug.apk
+          if-no-files-found: error

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cgjeqxplte5qs"]
+
+[ext_resource type="Script" uid="uid://c6t173v3dnj0g" path="res://Scripts/Managers/SceneManager.gd" id="1_wx451"]
+[ext_resource type="Texture2D" uid="uid://cfil2ci14by1s" path="res://asset/transition_img.png" id="2_85jkw"]
+
+[node name="SceneManager" type="CanvasLayer" unique_id=724993875]
+script = ExtResource("1_wx451")
+
+[node name="Clouds" type="Control" parent="." unique_id=1046238853]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CloudLeft" type="TextureRect" parent="Clouds" unique_id=846176235]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+texture = ExtResource("2_85jkw")
+
+[node name="CloudRight" type="TextureRect" parent="Clouds" unique_id=818718511]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("2_85jkw")

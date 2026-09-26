@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cfxy5u0bdejrk"]
+
+[ext_resource type="Script" uid="uid://d2s057xf0jie0" path="res://Scripts/Components/WordBox.gd" id="1_xvxvf"]
+[ext_resource type="FontFile" uid="uid://bv6q41v0ma27f" path="res://fonts/BTitrBd.ttf" id="2_r4q7c"]
+
+[node name="WordBox" type="Panel" unique_id=1178373840]
+script = ExtResource("1_xvxvf")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1283527999]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Glow" type="TextureRect" parent="." unique_id=1443104111]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="." unique_id=136896101]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.9647059, 0.90588236, 0.75686276, 1)
+theme_override_fonts/font = ExtResource("2_r4q7c")
+theme_override_font_sizes/font_size = 50
+
+[node name="Star" type="TextureRect" parent="." unique_id=1055208985]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1266298555]

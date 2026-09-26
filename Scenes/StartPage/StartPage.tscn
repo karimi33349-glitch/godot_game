@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://dlwvis4snauuk"]
+
+[ext_resource type="Script" uid="uid://c53jetg5eoguc" path="res://Scripts/StartPage/StartPage.gd" id="1_xioxi"]
+[ext_resource type="Texture2D" uid="uid://fa4e4dsk5uim" path="res://asset/bg_game.png" id="2_2jty8"]
+[ext_resource type="Texture2D" uid="uid://kdefofnik63g" path="res://asset/open_level_now.png" id="3_6f7cc"]
+[ext_resource type="FontFile" uid="uid://35r5sf7nxrb8" path="res://fonts/Lalezar-Regular.ttf" id="4_2np6m"]
+
+[node name="StartPage" type="Control" unique_id=390693686]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(3.9793603, 3.8456779)
+script = ExtResource("1_xioxi")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2112733129]
+layout_mode = 0
+offset_left = -1.0
+offset_right = 1023.0
+offset_bottom = 1536.0
+scale = Vector2(0.26586932, 0.29835543)
+texture = ExtResource("2_2jty8")
+
+[node name="NowLevel" type="TextureButton" parent="." unique_id=155076023]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 228.0
+offset_right = 2229.0
+offset_bottom = 952.0
+scale = Vector2(0.07365313, 0.079006135)
+texture_normal = ExtResource("3_6f7cc")
+texture_pressed = ExtResource("3_6f7cc")
+texture_hover = ExtResource("3_6f7cc")
+texture_disabled = ExtResource("3_6f7cc")
+texture_focused = ExtResource("3_6f7cc")
+
+[node name="NowLevelLabel" type="Label" parent="NowLevel" unique_id=371984907]
+layout_mode = 0
+offset_left = 801.05176
+offset_top = 151.88696
+offset_right = 1746.0518
+offset_bottom = 1096.887
+theme_override_colors/font_color = Color(0.21568628, 0.1254902, 0.043137256, 1)
+theme_override_colors/font_outline_color = Color(0.9490196, 0.8666667, 0.6627451, 1)
+theme_override_constants/outline_size = 40
+theme_override_fonts/font = ExtResource("4_2np6m")
+theme_override_font_sizes/font_size = 300
+text = "مرحله 97
+"
+
+[node name="Levels" type="TextureButton" parent="." unique_id=1661021992]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 287.0
+offset_right = 2242.0
+offset_bottom = 1011.0
+scale = Vector2(0.061427668, 0.06737796)
+texture_normal = ExtResource("3_6f7cc")
+texture_pressed = ExtResource("3_6f7cc")
+texture_hover = ExtResource("3_6f7cc")
+texture_disabled = ExtResource("3_6f7cc")
+texture_focused = ExtResource("3_6f7cc")
+
+[node name="LevelsLabel" type="Label" parent="Levels" unique_id=483921166]
+layout_mode = 0
+offset_left = 862.8037
+offset_top = 148.41675
+offset_right = 1445.8037
+offset_bottom = 572.41675
+theme_override_colors/font_color = Color(0.28627452, 0.17254902, 0.07058824, 0.9019608)
+theme_override_colors/font_outline_color = Color(0.9491208, 0.8677431, 0.661224, 1)
+theme_override_constants/outline_size = 40
+theme_override_fonts/font = ExtResource("4_2np6m")
+theme_override_font_sizes/font_size = 270
+text = "مراحل"
+
+[connection signal="pressed" from="NowLevel" to="." method="go_to_now_level"]
+[connection signal="pressed" from="Levels" to="." method="go_to_chapters_page"]

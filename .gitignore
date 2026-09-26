@@ -1,0 +1,33 @@
+# Godot editor cache and generated state
+.godot/
+
+# Android/Gradle generated files
+/android/
+.gradle/
+local.properties
+*.iml
+.gradletasknamecache
+
+# Local Android export credentials - NEVER commit these
+export_credentials.cfg
+*.keystore
+*.jks
+
+# Build output
+build/
+dist/
+*.apk
+*.aab
+*.pck
+*.zip
+
+# OS / IDE files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+~*
