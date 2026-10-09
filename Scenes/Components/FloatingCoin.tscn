@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c6sd7qdo15g1w"]
+
+[node name="FloatingCoin" type="Control" unique_id=1625201191]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Coin" type="TextureRect" parent="." unique_id=151345577]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="." unique_id=1054955527]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1629951663]

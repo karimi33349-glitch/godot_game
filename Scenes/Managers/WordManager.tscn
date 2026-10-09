@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://6vh4ydylg1s5"]
+
+[ext_resource type="Script" uid="uid://drbhbw7aecc7n" path="res://Scripts/Managers/WordManager.gd" id="1_q0m1x"]
+
+[node name="WordManager" type="Node" unique_id=888940628]
+script = ExtResource("1_q0m1x")

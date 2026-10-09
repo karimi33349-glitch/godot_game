@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bsolaxmgf7gut"]
+
+[sub_resource type="GDScript" id="GDScript_8ayqj"]
+
+[node name="Level" type="Node" unique_id=125584844]
+script = SubResource("GDScript_8ayqj")

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c8djqb4cwhhm1"]
+
+[node name="WinPopup" type="Control" unique_id=937368136]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Background" type="TextureRect" parent="." unique_id=2044982500]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Title" type="Label" parent="." unique_id=998880322]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CoinsLabel" type="Label" parent="." unique_id=119741708]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="NextButton" type="TextureButton" parent="." unique_id=1799666072]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HomeButton" type="TextureButton" parent="." unique_id=1945286399]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2118027630]

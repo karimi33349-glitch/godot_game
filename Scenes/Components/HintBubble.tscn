@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bytnty5n4aqia"]
+
+[node name="HintBubble" type="Control" unique_id=1386192873]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Background" type="TextureRect" parent="." unique_id=1884704529]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="." unique_id=1413341630]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=577030375]

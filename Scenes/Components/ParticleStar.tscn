@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cviywnvykkuhl"]
+
+[node name="ParticleStar" type="Node2D" unique_id=1322341193]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1244116930]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=713568293]

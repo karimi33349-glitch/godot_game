@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c337hiikfm0ua"]
+
+[node name="TopBar" type="Control" unique_id=813246432]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="CoinIcon" type="TextureRect" parent="." unique_id=1376827539]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CoinLabel" type="Label" parent="." unique_id=1443283579]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="HintButton" type="TextureButton" parent="." unique_id=1533210069]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ShuffleButton" type="TextureButton" parent="." unique_id=1245534883]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PauseButton" type="TextureButton" parent="." unique_id=1529696412]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1846315115]

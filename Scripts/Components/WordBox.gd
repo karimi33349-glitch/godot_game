@@ -1,7 +1,5 @@
 extends Panel
 
-const WORD_BOX_TEXTURE = preload("res://asset/word_box_img.png")
-
 @onready var background: TextureRect = $Background
 @onready var glow: TextureRect = $Glow
 @onready var label: Label = $Label
@@ -64,8 +62,10 @@ func fill(letter_text:String,size:float) -> void:
 	label.add_theme_font_size_override("font_size", font_size)
 	label.add_theme_constant_override("line_spacing", -2)
 	
+	var word_box_img = load("res://asset/word_box_img.png")
+	
 	# ✅ تنظیم اندازه TextureRect
-	background.texture = WORD_BOX_TEXTURE
+	background.texture = word_box_img
 	var img_size = background.texture.get_size()
 	background.scale = Vector2(size/img_size.x,size/img_size.y) 
 	

@@ -1,153 +1,166 @@
 extends Control
 
-var line_alpha := 1.0
-var fading := false
+signal word_finished(word: String, buttons: Array)
 
-var note_index := 0
-const NOTES: Array[AudioStream] = [
-	preload("res://sounds/do.wav"),
-	preload("res://sounds/re.wav"),
-	preload("res://sounds/mi.wav"),
-	preload("res://sounds/fa.wav"),
-	preload("res://sounds/sol.wav"),
-	preload("res://sounds/la.wav")
-]
+var line_color = Color.WHITE
 
-@onready var audio: AudioStreamPlayer = $AudioStreamPlayer
-@onready var label_user_target: Label = $"../UI/LabelUserTarget"
+@export var normal_color := Color.WHEAT
+@export var correct_color := Color.WEB_GREEN
+@export var wrong_color := Color.DARK_RED
+@export var line_width: float = 15.0
+@export var fade_speed: float = 2.5
+@export var smooth_detail: int = 30
 
-var current_button: Control = null
-var last_button: Control = null
 var dragging := false
+var fading := false
+var alpha := 1.0
+
 var selected_buttons: Array[Control] = []
-var touch_position := Vector2.ZERO
-var user_target := ""
-var answers: Array[String] = []
+var selected_letters: Array[String] = []
+var current_button = null
 
+enum LineState {
+	NORMAL,
+	CORRECT,
+	WRONG
+}
 
-func _ready() -> void:
+var State := LineState.NORMAL
+
+var fixed_points: Array[Vector2] = []
+var mouse_point: Vector2 = Vector2.ZERO
+
+var is_clearing := false
+
+# ✅ ارجاع به UserAnswer برای به‌روزرسانی
+@onready var user_answer = $"../UI/UserAnswer"
+
+func _ready():
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-
-func set_answers(level_answers: Array) -> void:
-	answers.clear()
-	for answer in level_answers:
-		answers.append(str(answer))
-
-
-func _process(delta: float) -> void:
+func _process(delta):
 	if fading:
-		line_alpha = max(0.0, line_alpha - delta * 5.0)
-		if line_alpha == 0.0:
+		alpha -= fade_speed * delta
+		queue_redraw()
+		
+		if alpha <= 0:
+			alpha = 0
 			fading = false
-			selected_buttons.clear()
-			queue_redraw()
-
+			_clear_safe()
+	
 	if dragging:
-		touch_position = get_local_mouse_position()
+		mouse_point = get_local_mouse_position()
 		queue_redraw()
 
+func is_button_selected(button) -> bool:
+	return button in selected_buttons
 
-func start_drag(button: Control) -> void:
-	line_alpha = 1.0
-	fading = false
-	selected_buttons.clear()
-	current_button = button
-	last_button = button
+func start_drag(button):
+	line_color = Color.WHEAT
+	# ✅ فقط خطوط را پاک کن، نه UserAnswer رو
+	_clear_line_only()
 	dragging = true
+	alpha = 1.0
+	
+	var button_center = button.get_global_rect().get_center()
+	var center_local = get_global_transform().affine_inverse() * button_center
+	fixed_points.append(center_local)
+	mouse_point = get_local_mouse_position()
+	
+	add_button(button)
 
-	selected_buttons.append(button)
-	button.select()
-	play_next_note()
-
-	user_target = button.get_letter()
-	_update_user_target()
-
-
-func add_button(button: Control) -> void:
+func add_button(button):
 	if button == null:
 		return
-
 	if button == current_button:
 		return
-
 	if button in selected_buttons:
 		return
 
 	current_button = button
-	last_button = button
 	selected_buttons.append(button)
+	selected_letters.append(button.get_letter())
 
-	button.select()
-	play_next_note()
-
-	user_target += button.get_letter()
-	_update_user_target()
+	if is_instance_valid(button):
+		button.select()
+	
+	var button_global = button.get_global_rect().get_center()
+	var button_local = get_global_transform().affine_inverse() * button_global
+	fixed_points.append(button_local)
+	
+	mouse_point = get_local_mouse_position()
+	
+	# ✅ به‌روزرسانی UserTarget
+	if is_instance_valid(user_answer) and user_answer.has_method("set_usertarget_label"):
+		user_answer.set_usertarget_label("".join(selected_letters))
+	
 	queue_redraw()
 
-
-func is_button_selected(button: Control) -> bool:
-	return button in selected_buttons
-
-
-func finish_drag() -> void:
-	end_drag()
-
-
-func end_drag() -> void:
-	if not dragging and selected_buttons.is_empty():
+func finish_drag():
+	if !dragging:
 		return
 
 	dragging = false
-	fading = true
 	current_button = null
-	last_button = null
 
-	if user_target in answers:
-		var style_box := label_user_target.get_theme_stylebox("normal")
-		if style_box:
-			var green_style = style_box.duplicate()
-			green_style.bg_color = Color(0.0, 0.424, 0.0, 0.957)
-			label_user_target.add_theme_stylebox_override("normal", green_style)
+	var word := "".join(selected_letters)
+	word_finished.emit(word, selected_buttons.duplicate())
 
-		await get_tree().create_timer(0.6).timeout
-		label_user_target.remove_theme_stylebox_override("normal")
-	else:
-		label_user_target.remove_theme_stylebox_override("normal")
+func fade(success_color:Color):
 
+	line_color = success_color
+	fading = true
+
+func _clear_line_only():
+	fixed_points.clear()
+	mouse_point = Vector2.ZERO
+	alpha = 1.0
+	fading = false
+	dragging = false
+	queue_redraw()
+
+func _clear_safe():
+	is_clearing = true
+	
 	for button in selected_buttons:
 		if is_instance_valid(button):
 			button.deselect()
-
+	
 	selected_buttons.clear()
-	user_target = ""
-	label_user_target.text = ""
+	selected_letters.clear()
+	current_button = null
+	fixed_points.clear()
+	mouse_point = Vector2.ZERO
+	alpha = 1.0
+	fading = false
+	dragging = false
+	
+	# ✅ پاک کردن UserTarget
+	if is_instance_valid(user_answer) and user_answer.has_method("set_usertarget_label"):
+		user_answer.set_usertarget_label("")
+
 	queue_redraw()
+	is_clearing = false
 
+func clear():
+	_clear_safe()
 
-func _update_user_target() -> void:
-	if label_user_target == null:
+func cancel_drag():
+	if !dragging:
 		return
+	
+	dragging = false
+	current_button = null
+	
+	for button in selected_buttons:
+		if is_instance_valid(button):
+			button.deselect()
+	
+	_clear_safe()
 
-	var center := label_user_target.position + label_user_target.size * 0.5
-	label_user_target.text = user_target
-	label_user_target.reset_size()
-	label_user_target.position = center - label_user_target.size * 0.5
+func get_smooth(points: Array, detail := 30) -> Array:
+	var result = []
 
-
-func play_next_note() -> void:
-	if NOTES.is_empty():
-		return
-
-	audio.stream = NOTES[note_index]
-	audio.pitch_scale = 1.0
-	audio.play()
-
-	note_index = (note_index + 1) % NOTES.size()
-
-
-func get_smooth_points(points: Array, detail := 10) -> Array:
-	var result: Array = []
 	if points.size() < 2:
 		return points
 
@@ -158,55 +171,40 @@ func get_smooth_points(points: Array, detail := 10) -> Array:
 		var p3 = points[min(i + 2, points.size() - 1)]
 
 		for t in range(detail):
-			var tt := t / float(detail)
-			result.append(catmull_rom(p0, p1, p2, p3, tt))
+			var tt = t / float(detail)
+			var point = catmull_rom(p0, p1, p2, p3, tt)
+			result.append(point)
 
-	result.append(points[points.size() - 1])
+	result.append(points[-1])
+
 	return result
 
-
 func catmull_rom(p0, p1, p2, p3, t):
-	var t2 := t * t
-	var t3 := t2 * t
+	var t2 = t * t
+	var t3 = t2 * t
+
 	return 0.5 * (
-		(2 * p1)
-		+ (-p0 + p2) * t
-		+ (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2
-		+ (-p0 + 3 * p1 - 3 * p2 + p3) * t3
+		(2 * p1) +
+		(-p0 + p2) * t +
+		(2*p0 - 5*p1 + 4*p2 - p3) * t2 +
+		(-p0 + 3*p1 - 3*p2 + p3) * t3
 	)
 
-
-func _draw() -> void:
-	if selected_buttons.is_empty():
+func _draw():
+	var draw_points: Array[Vector2] = []
+	
+	for p in fixed_points:
+		draw_points.append(p)
+	
+	if dragging and fixed_points.size() > 0:
+		draw_points.append(mouse_point)
+	
+	if draw_points.size() < 2:
 		return
-
-	var color := Color.WHITE
-	color.a = line_alpha
-
-	var points: Array[Vector2] = []
-
-	for button in selected_buttons:
-		if not is_instance_valid(button):
-			continue
-		var point := to_local(button.get_global_rect().get_center())
-		points.append(point)
-
-	if dragging:
-		points.append(to_local(get_global_mouse_position()))
-
-	if points.size() < 2:
-		return
-
-	if points.size() == 2:
-		draw_line(points[0], points[1], color, 10.0, true)
-		return
-
-	var smooth_points := get_smooth_points(points, 8)
-	for i in range(smooth_points.size() - 1):
-		draw_line(
-			smooth_points[i],
-			smooth_points[i + 1],
-			color,
-			10.0,
-			true
-		)
+	
+	var smooth = get_smooth(draw_points, smooth_detail)
+	
+	var c = line_color
+	c.a = alpha
+	
+	draw_polyline(smooth, c, line_width, true)

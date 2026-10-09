@@ -104,7 +104,6 @@ func _on_level_started(level_data) -> void:
 
 	var answers = level_data["answers"]
 
-	line_drawer.set_answers(answers)
 
 	letter_tray.setup(
 		level_manager.generate_letters(
@@ -317,4 +316,7 @@ func _on_popup_next_level() -> void:
 # =========================================================
 
 func _on_popup_levels() -> void:
-	SceneManager.change_scene("res://Scenes/PageLevels/ShowLevels.tscn")
+
+	get_tree().change_scene_to_file(
+		"res://Scenes/PageLevels/ShowLevels.tscn"
+	)

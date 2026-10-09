@@ -140,9 +140,8 @@ func play_intro_animation():
 	# ✅ بررسی اینکه تعداد shuffled با buttons برابر است
 	var max_index = min(buttons.size(), shuffled.size())
 
-	var deploy_tweens: Array[Tween] = []
 	for i in max_index:
-		var tween := create_tween()
+		var tween = create_tween()
 		tween.set_trans(Tween.TRANS_BACK)
 		tween.set_ease(Tween.EASE_OUT)
 		tween.tween_property(
@@ -151,10 +150,7 @@ func play_intro_animation():
 			shuffled[i],
 			DEPLOY_TIME
 		)
-		deploy_tweens.append(tween)
-
-	await get_tree().create_timer(DEPLOY_TIME).timeout
-	shuffling = false
+		shuffling = false
 		
 
 func get_button_size(count: int) -> float:
